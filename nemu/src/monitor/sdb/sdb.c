@@ -23,6 +23,8 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+word_t paddr_read(paddr_t addr, int len);
+
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -75,8 +77,24 @@ static int cmd_info(char *args) {
 		isa_reg_display();
 	}
 
-
 	return 0;	
+}
+
+static int cmd_x(char *args) {
+	char *s_num = strtok(NULL, " ");
+	if (s_num == NULL) return 0;
+	char *s_expr = strtok(NULL, " ");
+	if (s_expr == NULL) return 0;
+	int num;
+	sscanf(s_num, "%d", &num);
+	word_t expr;
+	sscanf(s_expr, FMT_WORD, &expr);
+
+	for (int i = 0; i < num; ++i) {
+		word_t paddr = expr + i*4;
+		printf("%lx\t%08lx\n", paddr, paddr_read(paddr, 4));
+	}
+	return 0;
 }
 
 static struct {
@@ -91,6 +109,7 @@ static struct {
   /* TODO: Add more commands */
 	{ "si", "Single step", cmd_si },
 	{ "info", "Print program status", cmd_info },
+	{ "x", "Scan memory", cmd_x },
 };
 
 #define NR_CMD ARRLEN(cmd_table)
