@@ -31,7 +31,7 @@ void isa_reg_display() {
 	rbx            0xffffffffffffff01  -255
 	 */ 
 	for (int i = 0; i < 32; ++i) {
-		printf("%s: " FMT_WORD, regs[i], cpu.gpr[i]);
+		printf("%s: " FMT_WORD "\n", regs[i], cpu.gpr[i]);
 	}	
 }
 
