@@ -24,6 +24,15 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
+	// 参考gdb的输出格式，直接通过printf()输出所有寄存器的值
+	/*
+	(gdb)info register
+	rax            0xfffffffffffffdfc  -516
+	rbx            0xffffffffffffff01  -255
+	 */ 
+	for (int i = 0; i < 32; ++i) {
+		printf("%s: " FMT_WORD, regs[i], cpu.gpr[i]);
+	}	
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
