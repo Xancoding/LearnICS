@@ -92,7 +92,7 @@ static int cmd_x(char *args) {
 
 	for (int i = 0; i < num; ++i) {
 		word_t paddr = expr + i*4;
-		printf("%lx\t%08lx\n", paddr, paddr_read(paddr, 4));
+		printf("%lx\t0x%lx\n", paddr, paddr_read(paddr, 4));
 	}
 	return 0;
 }
