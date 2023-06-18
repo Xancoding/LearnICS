@@ -56,10 +56,23 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
+	char *s_num = strtok(NULL, " ");
+	if (s_num == NULL) {
+		cpu_exec(1);
+	} else {
+		int num;
+		sscanf(s_num, "%d", &num);
+		cpu_exec(num);
+	}
+	return 0;	
+}
+
+static int cmd_info(char *args) {
 	char *arg = strtok(NULL, " ");
-	int num;
-	sscanf(arg, "%d", &num);
-	cpu_exec(num);
+	if (strcmp(arg, "r") == 0) {
+		isa_reg_display();
+	}
+
 	return 0;	
 }
 
@@ -74,7 +87,7 @@ static struct {
 
   /* TODO: Add more commands */
 	{ "si", "Single step", cmd_si },
-
+	{ "info", "Print program status", cmd_info },
 };
 
 #define NR_CMD ARRLEN(cmd_table)
